@@ -1,6 +1,6 @@
 pandas
 scikit-learn
 numpy
-
+ipykernel
 
 -e .
