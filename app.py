@@ -30,7 +30,7 @@ def predict_datapoint():
             color= request.form.get('color'),
             clarity = request.form.get('clarity')
         )
-        
+        # this is my final data
         final_data=data.get_data_as_dataframe()
         
         predict_pipeline=PredictPipeline()
