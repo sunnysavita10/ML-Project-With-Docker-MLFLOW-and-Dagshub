@@ -1,0 +1,16 @@
+stages:
+  training:
+    cmd: python src/DimondPricePrediction/pipelines/training_pipeline.py
+    deps:
+      - src/DimondPricePrediction/pipelines/training_pipeline.py
+      - src/DimondPricePrediction/components/data_ingestion.py
+      - src/DimondPricePrediction/components/data_transformation.py
+      - src/DimondPricePrediction/components/model_trainer.py
+      - src/DimondPricePrediction/components/model_evaluation.py
+
+    outs:
+      - artifacts/raw.csv
+      - artifacts/test.csv
+      - artifacts/train.csv
+      - artifacts/preprocessor.pkl
+      - artifacts/model.pkl
