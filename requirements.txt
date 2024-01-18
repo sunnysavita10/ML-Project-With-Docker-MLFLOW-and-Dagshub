@@ -7,5 +7,6 @@ Flask
 #this is more stable version
 mlflow==2.2.2
 dvc
+apache-airflow
 
-#-e .
+-e .

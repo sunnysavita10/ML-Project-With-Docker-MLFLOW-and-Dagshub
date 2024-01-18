@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/fsdsmendtoend/mlruns/0/043df80fb1924f68bf837ae6987c3721/artifacts
+end_time: 1700894097543
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 043df80fb1924f68bf837ae6987c3721
+run_name: treasured-seal-92
+run_uuid: 043df80fb1924f68bf837ae6987c3721
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1700894089673
+status: 3
+tags: []
+user_id: sunny
