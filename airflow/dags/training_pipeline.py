@@ -12,7 +12,7 @@ with DAG(
     "gemstone_training_pipeline",
     default_args={"retries": 2},
     description="it is my training pipeline",
-    schedule="@weekly",
+    schedule="@weekly",# here you can test based on hour or mints but make sure here you container is up and running
     start_date=pendulum.datetime(2024, 1, 17, tz="UTC"),
     catchup=False,
     tags=["machine_learning ","classification","gemstone"],
@@ -41,11 +41,13 @@ with DAG(
         test_arr=np.array(data_transformation_artifact["test_arr"])
         training_pipeline.start_model_training(train_arr,test_arr)
     
-    def push_data_to_s3(**kwargs):
+    ## you have to config azure blob
+    def push_data_to_azureblob(**kwargs):
         import os
-        bucket_name=os.getenv("BUCKET_NAME")
+        bucket_name="reposatiory_name"
         artifact_folder="/app/artifacts"
-        os.system(f"aws s3 sync {artifact_folder} s3:/{bucket_name}/artifact")
+        #you can save it ti the azure blob
+        #os.system(f"aws s3 sync {artifact_folder} s3:/{bucket_name}/artifact")
         
         
         
