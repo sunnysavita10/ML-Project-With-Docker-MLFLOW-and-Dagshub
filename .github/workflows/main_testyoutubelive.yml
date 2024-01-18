@@ -1,0 +1,51 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
+name: Build and deploy container app to Azure Web App - testyoutubelive
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: 'ubuntu-latest'
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: https://youtubelive.azurecr.io/
+        username: ${{ secrets.AzureAppService_ContainerUsername_222fce1e760a47159560396e07cbe3e3 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_e4ce65e372284ff387b06b9265baa0db }}
+
+    - name: Build and push container image to registry
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        tags: youtubelive.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_222fce1e760a47159560396e07cbe3e3 }}/youtubecomm:${{ github.sha }}
+        file: ./Dockerfile
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: 'production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+    - name: Deploy to Azure Web App
+      id: deploy-to-webapp
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'testyoutubelive'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_0b3e00bc24ea43c5b365aff4ad79f4a9 }}
+        images: 'youtubelive.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_222fce1e760a47159560396e07cbe3e3 }}/youtubecomm:${{ github.sha }}'
